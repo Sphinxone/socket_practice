@@ -57,3 +57,10 @@ void Server::newConnetion(Socket *serv_sock)
     clnt_channel->setCallback(_cb);
     clnt_channel->enableReading();
 }
+
+void Server::deleteConnection(Socket *sock)
+{
+    Connection *conn = connections[sock->getFd()];
+    connections.erase(sock->getFd());
+    delete conn;
+}

@@ -28,7 +28,6 @@ void Epoll::addfd(int fd, bool enable_et)
     if(enable_et){
         ev.events |= EPOLLET;
     }
-    // ev.events = 
     epoll_ctl(epollfd,EPOLL_CTL_ADD,fd,&ev);
 }
 

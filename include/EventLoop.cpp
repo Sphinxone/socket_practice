@@ -2,13 +2,14 @@
 #include <vector>
 #include "Channel.h"
 #include "Epoll.h"
-EventLoop::EventLoop()
+EventLoop::EventLoop(): ep(nullptr), quit(false)
 {
     ep = new Epoll(5);
 }
 
 EventLoop::~EventLoop()
 {
+    delete ep;
 }
 
 void EventLoop::loop()

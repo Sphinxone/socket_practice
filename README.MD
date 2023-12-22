@@ -49,17 +49,38 @@ Epoll主要是对于Epoll进行进一步的封装，与Chanel相结合。
 # Connection
 连接相关
 
+    EventLoop *loop;
+    Socket *sock;
     Channel *connectChannel;
     std::function<void()> cb;
 
 
 # Channel
 有一些变量看似不重要，但其实是可以层层传递到真正使用这个这个变量的类上，比如loop
+
     int fd;
-    EventLoop *loop;
-    boll inEpoll;
-    
+    EventLoop *loop;//其中包含Epoll，用于注册事件
+    boll inEpoll;//是否已经被注册到了Epoll中
+    uint32_t events;
+    uint32_t revents;
+    std::function<void()> cd;
 
 # Socket
 
+    int fd
+
+
 # Address
+Address主要用在bind accept上，bind是Server端控制的，因此传入的Address为Server自行设定的，而accept端是接收Client的连接，因此传入的Address是指针，用于接收Client端的连接请求。
+
+    struct sockaddr_in address;
+    socklen_t socklen;
+
+
+# 所用技术解析
+
+## 上锁
+
+std::unique_lock VS std::lock_guard
+
+std::lock_guard是使用RALL语法的模板类，std::unique_lock是更加灵活，可以显式调用lock和unlock

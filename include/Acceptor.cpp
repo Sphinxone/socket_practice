@@ -13,7 +13,7 @@ Acceptor::Acceptor(EventLoop *_loop, Address *_address)
     loop = _loop;
     address = _address;
     sock = new Socket(AF_INET,SOCK_STREAM);
-    address = _address;
+    // address = _address;
     sock->bind(address);
     sock->listen();
     sock->setnonblocking();
